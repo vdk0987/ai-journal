@@ -1,6 +1,10 @@
 import Link from "next/link";
+import { auth } from "@clerk/nextjs/server";
 
-export default function Home() {
+export default async function Home() {
+  const { userId } = await auth();
+  const href = userId ? "/journal" : "/sign-in";
+
   return (
     <div className="relative flex min-h-screen items-center justify-center bg-gradient-to-br from-[#0f0b14] via-[#1a1224] to-[#0f0b14] px-6">
       <div className="absolute inset-0 -z-10">
@@ -22,7 +26,7 @@ export default function Home() {
         </p>
 
         <div className="mt-10 flex justify-center">
-          <Link href={"/sign-up"}>
+          <Link href={href}>
             <button className="rounded-lg bg-purple-600 px-8 py-3 text-base font-medium text-white transition hover:bg-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:ring-offset-2 focus:ring-offset-[#0f0b14]">
               Get Started
             </button>
