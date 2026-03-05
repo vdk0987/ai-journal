@@ -1,7 +1,7 @@
 import { SignIn } from "@clerk/nextjs";
 
 const signInPage = () => {
-  return <SignIn />;
+  return <SignIn forceRedirectUrl="/new-user" />;
 };
 
 export default signInPage;
