@@ -1,7 +1,9 @@
-const journalPage = () => {
+import NewEntryCard from "@/components/newEntry";
+
+const journalPage = async () => {
   return (
     <div>
-      <h1> journal </h1>
+      <NewEntryCard />
     </div>
   );
 };
