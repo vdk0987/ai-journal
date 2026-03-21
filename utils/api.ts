@@ -1,0 +1,16 @@
+const getURL = (path: string) => {
+  return window.location.origin + path;
+};
+
+export const createEntry = async () => {
+  const res = await fetch(
+    new Request(getURL("/api/journal"), {
+      method: "POST",
+    }),
+  );
+
+  if (res.ok) {
+    const data = await res.json();
+    return data.data;
+  }
+};
