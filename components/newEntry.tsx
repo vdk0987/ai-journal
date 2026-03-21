@@ -2,15 +2,20 @@
 
 import { Card, CardContent } from "@/components/ui/card";
 import { Plus } from "lucide-react";
+import { createEntry } from "@/utils/api";
+import { useRouter } from "next/navigation";
 
-interface NewEntryCardProps {
-  onClick?: () => void;
-}
+export default function NewEntryCard() {
+  const router = useRouter();
 
-export default function NewEntryCard({ onClick }: NewEntryCardProps) {
+  const handleClick = async () => {
+    const data = await createEntry();
+    router.push(`/journal/${data.id}`);
+  };
+
   return (
     <Card
-      onClick={onClick}
+      onClick={handleClick}
       className="group cursor-pointer border-dashed transition-all hover:border-primary hover:bg-muted/40"
     >
       <CardContent className="flex h-40 flex-col items-center justify-center gap-3">
