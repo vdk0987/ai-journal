@@ -1,8 +1,8 @@
-import { currentUser } from "@clerk/nextjs/server";
+import { getUserByClerkId } from "./auth";
 import { prisma } from "@/utils/db";
 
 const getEntries = async () => {
-  const user = await currentUser();
+  const user = await getUserByClerkId();
   const entries = await prisma.journalEntry.findMany({
     where: {
       userId: user?.id,
@@ -11,7 +11,7 @@ const getEntries = async () => {
       createdAt: "desc",
     },
   });
-  return entries
+  return entries;
 };
 
 export default getEntries;
