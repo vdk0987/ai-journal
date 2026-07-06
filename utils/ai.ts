@@ -1,9 +1,11 @@
-import { ChatGoogle } from "@langchain/google";
-import * as z from "zod";
+import { ChatGoogleGenerativeAI } from "@langchain/google-genai";
+import { z } from "zod";
 
-const model = new ChatGoogle("gemini-2.5-flash");
+const model = new ChatGoogleGenerativeAI({
+  model: "gemini-2.5-flash",
+});
 
-const ResponseSchema = z.object({
+const responseSchema = z.object({
   mood: z
     .string()
     .describe(
@@ -22,5 +24,21 @@ const ResponseSchema = z.object({
     ),
 });
 
-const modelStrucutured = model.withStructuredOutput(ResponseSchema);
+const modelStructured = model.withStructuredOutput(responseSchema);
 
+const systemPrompt = `You are a helpful assistant that analyzes journal entries and
+  provides insights about the mood, summary, colour, and sentiment of the entry.
+  Never make up information and always adhere to the json structure. The output should be a valid JSON object with the following structure:
+{
+  "mood": "string",
+  "summary": "string",
+  "colour": "string",
+  "sentiment": number
+}. The fields mood, summary, colour and sentiment must also be enclosed with double quotes`;
+
+export const analyzeJournalEntry = async (entryContent: string) => {
+  const result = await modelStructured.invoke([
+    ["system", systemPrompt],
+    ["human", `Journal Entry: "${entryContent}"`],
+  ]);
+};
