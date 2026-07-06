@@ -50,10 +50,10 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarHeader>
       <SidebarContent>
         <DatePicker />
-        <SidebarSeparator className="mx-0" />
-        <Calendars calendars={data.calendars} />
+        {/*<SidebarSeparator className="mx-0" />*/}
+        {/*<Calendars calendars={data.calendars} />*/}
       </SidebarContent>
-      <SidebarFooter>
+      {/*<SidebarFooter>
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton>
@@ -62,8 +62,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
-      </SidebarFooter>
-      <SidebarRail />
+      </SidebarFooter>*/}
+      {/*<SidebarRail />*/}
     </Sidebar>
   );
 }
