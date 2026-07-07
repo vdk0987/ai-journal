@@ -2,7 +2,7 @@ import { ChatGoogleGenerativeAI } from "@langchain/google-genai";
 import { z } from "zod";
 
 const model = new ChatGoogleGenerativeAI({
-  model: "gemini-2.5-flash",
+  model: "gemini-2.5-flash-lite",
 });
 
 const responseSchema = z.object({
@@ -41,4 +41,5 @@ export const analyzeJournalEntry = async (entryContent: string) => {
     ["system", systemPrompt],
     ["human", `Journal Entry: "${entryContent}"`],
   ]);
+  return result;
 };
