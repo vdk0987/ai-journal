@@ -1,6 +1,7 @@
 import { getUserByClerkId } from "@/utils/auth";
 import { prisma } from "@/utils/db";
 import { NextResponse } from "next/server";
+import { analyzeJournalEntry } from "@/utils/ai";
 
 export const PATCH = async (request: Request, { params }) => {
   const { id } = await params;
@@ -15,6 +16,15 @@ export const PATCH = async (request: Request, { params }) => {
     },
     data: {
       content: content,
+    },
+  });
+
+  await prisma.analysis.update({
+    where: {
+      entryId: updatedEntry.id,
+    },
+    data: {
+      ...(await analyzeJournalEntry(updatedEntry.content)),
     },
   });
 
