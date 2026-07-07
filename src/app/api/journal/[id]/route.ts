@@ -19,7 +19,7 @@ export const PATCH = async (request: Request, { params }) => {
     },
   });
 
-  await prisma.analysis.update({
+  const updatedAnalysis = await prisma.analysis.update({
     where: {
       entryId: updatedEntry.id,
     },
@@ -28,5 +28,10 @@ export const PATCH = async (request: Request, { params }) => {
     },
   });
 
-  return NextResponse.json({ data: updatedEntry });
+  return NextResponse.json({
+    data: {
+      ...updatedEntry,
+      analysis: updatedAnalysis,
+    },
+  });
 };

@@ -1,12 +1,9 @@
 import Editor from "@/components/editor";
-import getEntry from "@/utils/getEntry";
 
-const entryPage = async ({ params }) => {
-  const { id } = await params;
-  const entry = await getEntry(id);
+const entryPage = () => {
   return (
     <div>
-      <Editor entry={entry} />
+      <Editor />
     </div>
   );
 };

@@ -1,13 +1,11 @@
+"use client";
+
 import type { ReactNode } from "react";
-import getEntry from "@/utils/getEntry";
+import { useJournalEntry } from "./journal-entry-context";
 
-type AiAnalysisProps = {
-  entryId: string;
-};
-
-const AiAnalysis = async ({ entryId }: AiAnalysisProps) => {
-  const entry = await getEntry(entryId);
-  const analysis = entry?.analysis;
+const AiAnalysis = () => {
+  const { entry } = useJournalEntry();
+  const analysis = entry.analysis;
 
   if (!analysis) {
     return (

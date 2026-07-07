@@ -3,16 +3,20 @@
 import { useState } from "react";
 import { useAutosave } from "react-autosave";
 import { updateEntry } from "@/utils/api";
+import { useJournalEntry } from "./journal-entry-context";
 
-const Editor = ({ entry }) => {
-  const [content, setContent] = useState(entry.content);
+const Editor = () => {
+  const { entry, setEntry } = useJournalEntry();
   const [isLoading, setIsloading] = useState(false);
-  const { id } = entry;
+
   useAutosave({
-    data: content,
+    data: entry.content,
     onSave: async (_value) => {
       setIsloading(true);
-      const updated = await updateEntry(id, _value);
+      const updated = await updateEntry(entry.id, _value);
+      if (updated) {
+        setEntry(updated);
+      }
       setIsloading(false);
     },
   });
@@ -21,8 +25,13 @@ const Editor = ({ entry }) => {
       {isLoading && <p>Saving...</p>}
       <textarea
         className="w-full h-full p-0 text-xl outline-none"
-        value={content}
-        onChange={(e) => setContent(e.target.value)}
+        value={entry.content}
+        onChange={(e) =>
+          setEntry((previousEntry) => ({
+            ...previousEntry,
+            content: e.target.value,
+          }))
+        }
       />
     </div>
   );

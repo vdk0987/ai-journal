@@ -1,8 +1,13 @@
+import type { JournalEntryState } from "@/components/journal-entry-context";
+
 const getURL = (path: string) => {
   return window.location.origin + path;
 };
 
-export const updateEntry = async (id, content) => {
+export const updateEntry = async (
+  id: string,
+  content: string,
+): Promise<JournalEntryState | undefined> => {
   const res = await fetch(
     new Request(getURL(`/api/journal/${id}`), {
       method: "PATCH",
